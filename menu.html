@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المنيو — مطعم الأصيل</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #c8963e;
+    --gold-light: #e8b96a;
+    --gold-pale: #f5e6c8;
+    --dark: #1a1208;
+    --dark2: #2d1f0a;
+    --cream: #fdf6e9;
+    --text: #3d2b0e;
+    --muted: #8a6d3b;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Tajawal', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ===== NAVBAR ===== */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 60px;
+    background: rgba(26, 18, 8, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(200,150,62,0.2);
+  }
+
+  .nav-logo {
+    font-family: 'Amiri', serif;
+    font-size: 1.6rem;
+    color: var(--gold-light);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: #d4b896;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: color 0.3s;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; right: 0;
+    width: 0; height: 2px;
+    background: var(--gold);
+    transition: width 0.3s;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active { color: var(--gold-light); }
+  .nav-links a:hover::after,
+  .nav-links a.active::after { width: 100%; }
+
+  /* ===== PAGE HERO ===== */
+  .page-hero {
+    margin-top: 72px;
+    background: var(--dark);
+    padding: 70px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1400&q=80');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.12;
+  }
+
+  .page-hero-content { position: relative; }
+
+  .page-hero span {
+    color: var(--gold);
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .page-hero h1 {
+    font-family: 'Amiri', serif;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    color: var(--cream);
+    margin-bottom: 12px;
+  }
+
+  .page-hero p {
+    color: #8a7060;
+    font-size: 1rem;
+    font-weight: 300;
+  }
+
+  /* ===== FILTER TABS ===== */
+  .filter-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    padding: 40px 20px 0;
+    flex-wrap: wrap;
+  }
+
+  .tab-btn {
+    padding: 10px 28px;
+    border-radius: 3px;
+    border: 1px solid rgba(200,150,62,0.3);
+    background: transparent;
+    color: var(--muted);
+    font-family: 'Tajawal', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s;
+    letter-spacing: 1px;
+  }
+
+  .tab-btn:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  .tab-btn.active {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--dark);
+  }
+
+  /* ===== MENU SECTION ===== */
+  .menu-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 24px 100px;
+  }
+
+  .category-block {
+    margin-bottom: 70px;
+    display: none;
+  }
+
+  .category-block.show { display: block; }
+
+  .category-title {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+
+  .category-title h2 {
+    font-family: 'Amiri', serif;
+    font-size: 2rem;
+    color: var(--dark);
+  }
+
+  .category-title .cat-icon { font-size: 1.8rem; }
+
+  .category-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to left, transparent, var(--gold-pale));
+  }
+
+  /* ===== MENU GRID ===== */
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+  }
+
+  .menu-card {
+    background: #fff;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid var(--gold-pale);
+    transition: all 0.3s;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .menu-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 40px rgba(200,150,62,0.15);
+    border-color: var(--gold);
+  }
+
+  .menu-card-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+
+  .menu-card:hover .menu-card-img { transform: scale(1.05); }
+
+  .menu-card-body {
+    padding: 18px 20px;
+  }
+
+  .menu-card-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 6px;
+  }
+
+  .menu-card-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 14px;
+  }
+
+  .menu-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 14px;
+    border-top: 1px solid var(--gold-pale);
+  }
+
+  .menu-card-price {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--gold);
+    font-family: 'Amiri', serif;
+  }
+
+  .menu-card-tag {
+    font-size: 0.72rem;
+    padding: 4px 12px;
+    border-radius: 2px;
+    background: var(--gold-pale);
+    color: var(--muted);
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  /* ===== DRINKS — بدون صور، ليستا أنيقة ===== */
+  .drinks-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+  }
+
+  .drink-item {
+    background: var(--dark);
+    border: 1px solid rgba(200,150,62,0.15);
+    border-radius: 6px;
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.25s;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .drink-item:hover {
+    border-color: rgba(200,150,62,0.5);
+    transform: translateY(-3px);
+  }
+
+  .drink-info {}
+  .drink-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 4px;
+  }
+  .drink-desc {
+    font-size: 0.78rem;
+    color: #5a4530;
+    font-weight: 300;
+  }
+
+  .drink-price {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--gold-light);
+    font-family: 'Amiri', serif;
+    white-space: nowrap;
+    margin-right: 16px;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: var(--dark);
+    padding: 50px 60px 30px;
+    border-top: 1px solid rgba(200,150,62,0.15);
+  }
+
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin-bottom: 40px;
+  }
+
+  .footer-logo {
+    font-family: 'Amiri', serif;
+    font-size: 1.8rem;
+    color: var(--gold-light);
+  }
+
+  .footer-logo p {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 0.85rem;
+    color: #5a4530;
+    margin-top: 6px;
+    font-weight: 300;
+  }
+
+  .footer-contact h4 {
+    color: var(--gold-light);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+    font-weight: 700;
+  }
+
+  .footer-contact p {
+    color: #8a7060;
+    font-size: 0.9rem;
+    line-height: 2;
+    font-weight: 300;
+  }
+
+  .footer-contact a {
+    color: #8a7060;
+    text-decoration: none;
+  }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(200,150,62,0.1);
+    padding-top: 24px;
+    text-align: center;
+    color: #4a3520;
+    font-size: 0.82rem;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { gap: 18px; }
+    .menu-grid { grid-template-columns: 1fr; }
+    .drinks-list { grid-template-columns: 1fr; }
+    footer { padding: 40px 24px 24px; }
+    .footer-top { flex-direction: column; }
+  }
+
+  @media (max-width: 500px) {
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">الأصيل</a>
+  <ul class="nav-links">
+    <li><a href="index.html">الرئيسية</a></li>
+    <li><a href="menu.html" class="active">المنيو</a></li>
+    <li><a href="contact.html">تواصل معنا</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-content">
+    <span>✦ قائمة الطعام ✦</span>
+    <h1>المنيو</h1>
+    <p>كل أكلاتنا بخامات طازجة يومياً</p>
+  </div>
+</div>
+
+<!-- FILTER TABS -->
+<div class="filter-tabs">
+  <button class="tab-btn active" onclick="filterMenu('all')">الكل</button>
+  <button class="tab-btn" onclick="filterMenu('food')">🍚 الأطباق الرئيسية</button>
+  <button class="tab-btn" onclick="filterMenu('drinks')">🥤 المشروبات</button>
+</div>
+
+<!-- MENU -->
+<div class="menu-section">
+
+  <!-- أطباق رئيسية -->
+  <div class="category-block show" id="cat-food">
+    <div class="category-title">
+      <span class="cat-icon">🍚</span>
+      <h2>الأطباق الرئيسية</h2>
+    </div>
+    <div class="menu-grid">
+
+      <div class="menu-card">
+        <img class="menu-card-img"
+          src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600&q=80"
+          alt="كشري كبير">
+        <div class="menu-card-body">
+          <div class="menu-card-name">كشري كبير</div>
+          <div class="menu-card-desc">كشري مصري أصلي بالمكرونة والأرز والعدس مع صلصة حمرا وخل وكروشيه مقرمش</div>
+          <div class="menu-card-footer">
+            <span class="menu-card-price">٢٥ جنيه</span>
+            <span class="menu-card-tag">الأكثر طلباً</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <img class="menu-card-img"
+          src="https://images.unsplash.com/photo-1574484284002-952d92456975?w=600&q=80"
+          alt="كشري صغير">
+        <div class="menu-card-body">
+          <div class="menu-card-name">كشري صغير</div>
+          <div class="menu-card-desc">نفس طعم الكشري الكبير في حجم مناسب للوجبة الخفيفة</div>
+          <div class="menu-card-footer">
+            <span class="menu-card-price">١٥ جنيه</span>
+            <span class="menu-card-tag">اقتصادي</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <img class="menu-card-img"
+          src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=600&q=80"
+          alt="فول بالزيت">
+        <div class="menu-card-body">
+          <div class="menu-card-name">فول بالزيت</div>
+          <div class="menu-card-desc">فول مدمس بزيت زيتون طبيعي وليمون وكمون وبقدونس طازج</div>
+          <div class="menu-card-footer">
+            <span class="menu-card-price">١٠ جنيه</span>
+            <span class="menu-card-tag">فطار</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <img class="menu-card-img"
+          src="https://images.unsplash.com/photo-1525351484163-7529414344d8?w=600&q=80"
+          alt="فول بالبيض">
+        <div class="menu-card-body">
+          <div class="menu-card-name">فول بالبيض</div>
+          <div class="menu-card-desc">فول مدمس مع بيض مقلي أو مسلوق حسب طلبك</div>
+          <div class="menu-card-footer">
+            <span class="menu-card-price">١٥ جنيه</span>
+            <span class="menu-card-tag">فطار</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <img class="menu-card-img"
+          src="https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?w=600&q=80"
+          alt="طعمية">
+        <div class="menu-card-body">
+          <div class="menu-card-name">طعمية مقرمشة</div>
+          <div class="menu-card-desc">طعمية خضرا من الفول الأخضر الطازج مقلية على الفور بالتوابل الأصلية</div>
+          <div class="menu-card-footer">
+            <span class="menu-card-price">٢٠ جنيه</span>
+            <span class="menu-card-tag">١٠ حبات</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- مشروبات -->
+  <div class="category-block show" id="cat-drinks">
+    <div class="category-title">
+      <span class="cat-icon">🥤</span>
+      <h2>المشروبات</h2>
+    </div>
+    <div class="drinks-list">
+
+      <div class="drink-item">
+        <div class="drink-info">
+          <div class="drink-name">🍋 عصير ليمون</div>
+          <div class="drink-desc">ليمون طازج مع نعناع</div>
+        </div>
+        <div class="drink-price">٢٠ جنيه</div>
+      </div>
+
+      <div class="drink-item">
+        <div class="drink-info">
+          <div class="drink-name">🍊 عصير برتقال</div>
+          <div class="drink-desc">برتقال طازج عصير على الفور</div>
+        </div>
+        <div class="drink-price">٢٥ جنيه</div>
+      </div>
+
+      <div class="drink-item">
+        <div class="drink-info">
+          <div class="drink-name">🍵 شاي</div>
+          <div class="drink-desc">شاي أحمر أو أخضر حسب طلبك</div>
+        </div>
+        <div class="drink-price">١٠ جنيه</div>
+      </div>
+
+      <div class="drink-item">
+        <div class="drink-info">
+          <div class="drink-name">☕ قهوة</div>
+          <div class="drink-desc">قهوة عربية أو نسكافيه</div>
+        </div>
+        <div class="drink-price">١٥ جنيه</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-logo">
+      الأصيل
+      <p>أكل مصري أصلي من ٢٠٠٤</p>
+    </div>
+    <div class="footer-contact">
+      <h4>تواصل معنا</h4>
+      <p>📞 01012345678</p>
+      <p>📍 15 شارع التحرير، المعادي، القاهرة</p>
+    </div>
+    <div class="footer-contact">
+      <h4>صفحات الموقع</h4>
+      <p><a href="index.html">الرئيسية</a></p>
+      <p><a href="menu.html">المنيو</a></p>
+      <p><a href="contact.html">تواصل معنا</a></p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2024 مطعم الأصيل — جميع الحقوق محفوظة
+  </div>
+</footer>
+
+<script>
+function filterMenu(type) {
+  // تحديث الأزرار
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+
+  const food   = document.getElementById('cat-food');
+  const drinks = document.getElementById('cat-drinks');
+
+  if (type === 'all') {
+    food.classList.add('show');
+    drinks.classList.add('show');
+  } else if (type === 'food') {
+    food.classList.add('show');
+    drinks.classList.remove('show');
+  } else if (type === 'drinks') {
+    food.classList.remove('show');
+    drinks.classList.add('show');
+  }
+}
+</script>
+
+</body>
+</html>
