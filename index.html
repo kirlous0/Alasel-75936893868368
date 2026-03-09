@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مطعم الأصيل</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #c8963e;
+    --gold-light: #e8b96a;
+    --gold-pale: #f5e6c8;
+    --dark: #1a1208;
+    --dark2: #2d1f0a;
+    --cream: #fdf6e9;
+    --text: #3d2b0e;
+    --muted: #8a6d3b;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Tajawal', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ===== NAVBAR ===== */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 60px;
+    background: rgba(26, 18, 8, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(200,150,62,0.2);
+  }
+
+  .nav-logo {
+    font-family: 'Amiri', serif;
+    font-size: 1.6rem;
+    color: var(--gold-light);
+    letter-spacing: 1px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: #d4b896;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: color 0.3s;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; right: 0;
+    width: 0; height: 2px;
+    background: var(--gold);
+    transition: width 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--gold-light); }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* ===== HERO ===== */
+  .hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1600&q=80');
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.35);
+    transform: scale(1.05);
+    animation: zoomOut 12s ease forwards;
+  }
+
+  @keyframes zoomOut {
+    from { transform: scale(1.1); }
+    to   { transform: scale(1.0); }
+  }
+
+  /* Decorative overlay pattern */
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at center bottom, rgba(200,150,62,0.15) 0%, transparent 65%),
+      linear-gradient(to top, rgba(26,18,8,0.7) 0%, transparent 60%);
+  }
+
+  .hero-content {
+    position: relative;
+    text-align: center;
+    padding: 0 20px;
+    animation: heroIn 1.2s ease both;
+  }
+
+  @keyframes heroIn {
+    from { opacity: 0; transform: translateY(40px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-badge {
+    display: inline-block;
+    border: 1px solid var(--gold);
+    color: var(--gold-light);
+    font-size: 0.85rem;
+    letter-spacing: 3px;
+    padding: 6px 20px;
+    border-radius: 2px;
+    margin-bottom: 28px;
+    animation: heroIn 1s ease 0.2s both;
+  }
+
+  .hero h1 {
+    font-family: 'Amiri', serif;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    animation: heroIn 1s ease 0.4s both;
+  }
+
+  .hero h1 span {
+    color: var(--gold-light);
+    display: block;
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: #c8b49a;
+    max-width: 480px;
+    margin: 0 auto 40px;
+    line-height: 1.8;
+    font-weight: 300;
+    animation: heroIn 1s ease 0.6s both;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: heroIn 1s ease 0.8s both;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--dark);
+    padding: 14px 36px;
+    border-radius: 3px;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 1rem;
+    transition: all 0.3s;
+    letter-spacing: 1px;
+  }
+
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(200,150,62,0.4);
+  }
+
+  .btn-outline {
+    border: 1px solid rgba(200,150,62,0.6);
+    color: var(--gold-light);
+    padding: 14px 36px;
+    border-radius: 3px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--gold-light);
+    background: rgba(200,150,62,0.1);
+    transform: translateY(-2px);
+  }
+
+  /* Scroll indicator */
+  .scroll-hint {
+    position: absolute;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: rgba(200,150,62,0.6);
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    animation: bounce 2s ease infinite;
+  }
+
+  .scroll-hint::after {
+    content: '';
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, rgba(200,150,62,0.6), transparent);
+  }
+
+  @keyframes bounce {
+    0%,100% { transform: translateX(-50%) translateY(0); }
+    50%      { transform: translateX(-50%) translateY(8px); }
+  }
+
+  /* ===== ORNAMENT DIVIDER ===== */
+  .ornament {
+    text-align: center;
+    padding: 20px 0;
+    color: var(--gold);
+    font-size: 1.4rem;
+    letter-spacing: 12px;
+  }
+
+  /* ===== FEATURES STRIP ===== */
+  .features-strip {
+    background: var(--dark);
+    padding: 40px 60px;
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    flex-wrap: wrap;
+  }
+
+  .feature-item {
+    text-align: center;
+    color: #d4b896;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards;
+  }
+
+  .feature-item:nth-child(1) { animation-delay: 0.1s; }
+  .feature-item:nth-child(2) { animation-delay: 0.25s; }
+  .feature-item:nth-child(3) { animation-delay: 0.4s; }
+  .feature-item:nth-child(4) { animation-delay: 0.55s; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .feature-icon { font-size: 2rem; margin-bottom: 8px; }
+  .feature-title { font-weight: 700; font-size: 1rem; color: var(--gold-light); }
+  .feature-desc { font-size: 0.82rem; color: #8a7060; margin-top: 3px; }
+
+  /* ===== ABOUT SECTION ===== */
+  .about {
+    padding: 100px 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .about-img-wrap {
+    position: relative;
+  }
+
+  .about-img {
+    width: 100%;
+    height: 460px;
+    object-fit: cover;
+    border-radius: 4px;
+    display: block;
+  }
+
+  /* Gold frame decoration */
+  .about-img-wrap::before {
+    content: '';
+    position: absolute;
+    top: -16px; right: -16px;
+    width: 100%; height: 100%;
+    border: 2px solid rgba(200,150,62,0.4);
+    border-radius: 4px;
+    z-index: -1;
+  }
+
+  .about-img-wrap::after {
+    content: '';
+    position: absolute;
+    bottom: -16px; left: -16px;
+    width: 60%; height: 60%;
+    border: 2px solid rgba(200,150,62,0.2);
+    border-radius: 4px;
+    z-index: -1;
+  }
+
+  .about-text .section-tag {
+    display: inline-block;
+    color: var(--gold);
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    font-weight: 700;
+  }
+
+  .about-text h2 {
+    font-family: 'Amiri', serif;
+    font-size: 2.8rem;
+    line-height: 1.3;
+    color: var(--dark);
+    margin-bottom: 24px;
+  }
+
+  .about-text p {
+    color: var(--muted);
+    line-height: 2;
+    font-size: 1.02rem;
+    margin-bottom: 16px;
+    font-weight: 300;
+  }
+
+  .stats-row {
+    display: flex;
+    gap: 40px;
+    margin-top: 36px;
+    padding-top: 36px;
+    border-top: 1px solid var(--gold-pale);
+  }
+
+  .stat-item {}
+  .stat-num {
+    font-family: 'Amiri', serif;
+    font-size: 2.4rem;
+    color: var(--gold);
+    font-weight: 700;
+    line-height: 1;
+  }
+  .stat-label { font-size: 0.82rem; color: var(--muted); margin-top: 4px; }
+
+  /* ===== FEATURED DISHES ===== */
+  .dishes-section {
+    background: var(--dark2);
+    padding: 90px 60px;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .section-header .tag {
+    color: var(--gold);
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .section-header h2 {
+    font-family: 'Amiri', serif;
+    font-size: 2.6rem;
+    color: var(--cream);
+  }
+
+  .section-header p {
+    color: #8a7060;
+    margin-top: 12px;
+    font-size: 1rem;
+    font-weight: 300;
+  }
+
+  .dishes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .dish-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(200,150,62,0.15);
+    border-radius: 6px;
+    overflow: hidden;
+    transition: all 0.35s;
+    cursor: pointer;
+  }
+
+  .dish-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(200,150,62,0.5);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  }
+
+  .dish-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+
+  .dish-card:hover .dish-img { transform: scale(1.06); }
+
+  .dish-info {
+    padding: 20px;
+  }
+
+  .dish-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 6px;
+  }
+
+  .dish-desc {
+    font-size: 0.82rem;
+    color: #8a7060;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .dish-price {
+    display: inline-block;
+    margin-top: 14px;
+    color: var(--gold-light);
+    font-weight: 800;
+    font-size: 1.05rem;
+  }
+
+  /* ===== CTA SECTION ===== */
+  .cta-section {
+    position: relative;
+    padding: 100px 40px;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .cta-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1400&q=80');
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.2);
+  }
+
+  .cta-content {
+    position: relative;
+  }
+
+  .cta-content h2 {
+    font-family: 'Amiri', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: #fff;
+    margin-bottom: 16px;
+  }
+
+  .cta-content p {
+    color: #c8b49a;
+    font-size: 1.05rem;
+    margin-bottom: 36px;
+    font-weight: 300;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: var(--dark);
+    padding: 50px 60px 30px;
+    border-top: 1px solid rgba(200,150,62,0.15);
+  }
+
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin-bottom: 40px;
+  }
+
+  .footer-logo {
+    font-family: 'Amiri', serif;
+    font-size: 1.8rem;
+    color: var(--gold-light);
+  }
+
+  .footer-logo p {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 0.85rem;
+    color: #5a4530;
+    margin-top: 6px;
+    font-weight: 300;
+  }
+
+  .footer-contact h4 {
+    color: var(--gold-light);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+    font-weight: 700;
+  }
+
+  .footer-contact p {
+    color: #8a7060;
+    font-size: 0.9rem;
+    line-height: 2;
+    font-weight: 300;
+  }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(200,150,62,0.1);
+    padding-top: 24px;
+    text-align: center;
+    color: #4a3520;
+    font-size: 0.82rem;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { gap: 20px; }
+    .about { grid-template-columns: 1fr; padding: 60px 24px; gap: 40px; }
+    .about-img-wrap { order: -1; }
+    .features-strip { padding: 36px 24px; gap: 36px; }
+    .dishes-section { padding: 60px 24px; }
+    .dishes-grid { grid-template-columns: 1fr 1fr; }
+    footer { padding: 40px 24px 24px; }
+    .footer-top { flex-direction: column; }
+  }
+
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+    .dishes-grid { grid-template-columns: 1fr; }
+    .stats-row { gap: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">الأصيل</div>
+  <ul class="nav-links">
+    <li><a href="#">الرئيسية</a></li>
+    <li><a href="menu.html">المنيو</a></li>
+    <li><a href="contact.html">تواصل معنا</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">✦ مطعم مصري أصيل ✦</div>
+    <h1>مرحباً بك في<span>الأصيل</span></h1>
+    <p class="hero-sub">أكلات مصرية بالطعم الأصلي — من أول لقمة هتحس إنك في البيت</p>
+    <div class="hero-btns">
+      <a href="menu.html" class="btn-primary">شوف المنيو</a>
+      <a href="contact.html" class="btn-outline">اتواصل معنا</a>
+    </div>
+  </div>
+  <div class="scroll-hint">اسكرول</div>
+</section>
+
+<!-- FEATURES STRIP -->
+<div class="features-strip">
+  <div class="feature-item">
+    <div class="feature-icon">🫙</div>
+    <div class="feature-title">خامات طازجة</div>
+    <div class="feature-desc">كل يوم بكره</div>
+  </div>
+  <div class="feature-item">
+    <div class="feature-icon">👨‍🍳</div>
+    <div class="feature-title">طهاة محترفون</div>
+    <div class="feature-desc">خبرة أكتر من 15 سنة</div>
+  </div>
+  <div class="feature-item">
+    <div class="feature-icon">💛</div>
+    <div class="feature-title">وصفات أصلية</div>
+    <div class="feature-desc">متوارثة من جيل لجيل</div>
+  </div>
+  <div class="feature-item">
+    <div class="feature-icon">📍</div>
+    <div class="feature-title">المعادي، القاهرة</div>
+    <div class="feature-desc">شارع التحرير ١٥</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about">
+  <div class="about-img-wrap">
+    <img
+      class="about-img"
+      src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80"
+      alt="أكلات الأصيل"
+    />
+  </div>
+  <div class="about-text">
+    <span class="section-tag">✦ قصتنا</span>
+    <h2>أكل مصري بيجمع الناس</h2>
+    <p>
+      من أكتر من عشرين سنة، مطعم الأصيل بيقدم أحسن الأكلات الشعبية المصرية
+      بنفس الطعم القديم اللي بيجيب الذكريات.
+    </p>
+    <p>
+      كشري، فول، وطعمية — مش بس أكل، ده تراث. وإحنا بنحافظ عليه كل يوم
+      بخامات طازجة ووصفات أصلية ما بتتغيرش.
+    </p>
+    <div class="stats-row">
+      <div class="stat-item">
+        <div class="stat-num">+٢٠</div>
+        <div class="stat-label">سنة خبرة</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">+٥٠٠</div>
+        <div class="stat-label">زبون يومياً</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">١٠٠٪</div>
+        <div class="stat-label">طازج يومياً</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED DISHES -->
+<section class="dishes-section">
+  <div class="section-header">
+    <span class="tag">✦ من المنيو</span>
+    <h2>أشهر أكلاتنا</h2>
+    <p>اختار من أحلى الأكلات الشعبية المصرية</p>
+  </div>
+  <div class="dishes-grid">
+    <div class="dish-card">
+      <img class="dish-img"
+        src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80"
+        alt="كشري">
+      <div class="dish-info">
+        <div class="dish-name">كشري الأصيل</div>
+        <div class="dish-desc">كشري مصري أصلي بصلصة حمرا وخل وكروشيه مقرمش</div>
+        <span class="dish-price">من ١٥ جنيه</span>
+      </div>
+    </div>
+    <div class="dish-card">
+      <img class="dish-img"
+        src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=600&q=80"
+        alt="فول">
+      <div class="dish-info">
+        <div class="dish-name">فول بالزيت والليمون</div>
+        <div class="dish-desc">فول مدمس بزيت عيش زيتون طبيعي وليمون وكمون</div>
+        <span class="dish-price">من ١٠ جنيه</span>
+      </div>
+    </div>
+    <div class="dish-card">
+      <img class="dish-img"
+        src="https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?w=600&q=80"
+        alt="طعمية">
+      <div class="dish-info">
+        <div class="dish-name">طعمية مقرمشة</div>
+        <div class="dish-desc">طعمية خضرا من الفول الأخضر مقلية على الفور</div>
+        <span class="dish-price">٢٠ جنيه (١٠ حبة)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-bg"></div>
+  <div class="cta-content">
+    <h2>جعان؟ إحنا قريبين منك</h2>
+    <p>تعال زورنا أو كلمنا دلوقتي</p>
+    <a href="contact.html" class="btn-primary">اتواصل معنا</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-logo">
+      الأصيل
+      <p>أكل مصري أصلي من ٢٠٠٤</p>
+    </div>
+    <div class="footer-contact">
+      <h4>تواصل معنا</h4>
+      <p>📞 01012345678</p>
+      <p>📍 15 شارع التحرير، المعادي، القاهرة</p>
+    </div>
+    <div class="footer-contact">
+      <h4>صفحات الموقع</h4>
+      <p><a href="#" style="color:#8a7060;text-decoration:none">الرئيسية</a></p>
+      <p><a href="menu.html" style="color:#8a7060;text-decoration:none">المنيو</a></p>
+      <p><a href="contact.html" style="color:#8a7060;text-decoration:none">تواصل معنا</a></p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2024 مطعم الأصيل — جميع الحقوق محفوظة
+  </div>
+</footer>
+
+</body>
+</html>
